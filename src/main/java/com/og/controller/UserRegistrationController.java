@@ -17,13 +17,25 @@ public class UserRegistrationController {
 
 	@Autowired
 	private UserRegistrationService userRegistrationService;
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ResponseEntity<UserForm> save(@RequestBody UserForm userForm) {
 		System.out.println(userForm);
 		UserForm savedUserForm = userRegistrationService.save(userForm);
-			return ResponseEntity.status(HttpStatus.OK).body(savedUserForm);
+		return ResponseEntity.status(HttpStatus.OK).body(savedUserForm);
 	}
-	
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value = "/authenticateUser", method = RequestMethod.POST)
+	public ResponseEntity<UserForm> getUserByUserNameAndPassword(@RequestBody UserForm userForm) {
+		System.out.println(userForm);
+		UserForm savedUserForm = userRegistrationService.getUserByUserNameAndPassword(userForm);
+		if (savedUserForm.getErrorMessage() != null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(savedUserForm);
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(savedUserForm);
+		}
+	}
+
 }
