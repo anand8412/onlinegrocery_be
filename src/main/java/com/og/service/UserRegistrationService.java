@@ -24,6 +24,21 @@ public class UserRegistrationService {
 		return userForm;
 	}
 
+	
+	public UserForm getUserByUserName(String userName) {
+		UserForm userForm = new UserForm();
+		List<User> users = userRegistrationRepository.getUserByUserName(userName);
+		if (users.size() != 1) {
+			userForm.setErrorMessage("user/password does not exist");
+			return userForm;
+		} else {
+			User user = users.get(0);
+			BeanUtils.copyProperties(user, userForm);
+			return userForm;
+		}
+
+	}
+	
 	public UserForm getUserByUserNameAndPassword(UserForm userForm) {
 		List<User> users = userRegistrationRepository.getUserByUserNameAndPassword(userForm.getUserName(),
 				userForm.getPassword());

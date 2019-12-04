@@ -11,6 +11,9 @@ import com.og.User;
 public interface UserRegistrationRepository extends CrudRepository<User, Long>  {
 
 	public List<User> getUserByUserNameAndPassword(String userName,String password);
+	
+	public List<User> getUserByUserName(String userName);
+	
 
 }
 
